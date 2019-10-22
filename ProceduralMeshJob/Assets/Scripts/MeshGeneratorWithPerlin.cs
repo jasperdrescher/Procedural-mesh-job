@@ -16,11 +16,11 @@ public class MeshGeneratorWithPerlin : MonoBehaviour
     private void Awake()
     {
         myMeshFilter = GetComponent<MeshFilter>();
-        myMeshCollider = GetComponent<MeshCollider>();
+        myMeshCollider = gameObject.AddComponent<MeshCollider>();
+        myMeshCollider.sharedMesh = null;
 
         myMesh = new Mesh();
         myMeshFilter.mesh = myMesh;
-        myMeshCollider.sharedMesh = myMesh;
     }
 
     private void Start()
@@ -70,5 +70,7 @@ public class MeshGeneratorWithPerlin : MonoBehaviour
     {
         myMesh.vertices = myVertices;
         myMesh.triangles = myTriangles;
+        myMesh.RecalculateBounds();
+        myMeshCollider.sharedMesh = myMesh;
     }
 }

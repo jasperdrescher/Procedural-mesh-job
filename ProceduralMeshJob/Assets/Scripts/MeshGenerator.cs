@@ -16,11 +16,11 @@ public class MeshGenerator : MonoBehaviour
     private void Awake()
     {
         myMeshFilter = GetComponent<MeshFilter>();
-        myMeshCollider = GetComponent<MeshCollider>();
+        myMeshCollider = gameObject.AddComponent<MeshCollider>();
+        myMeshCollider.sharedMesh = null;
 
         myMesh = new Mesh();
         myMeshFilter.mesh = myMesh;
-        myMeshCollider.sharedMesh = myMesh;
     }
 
     private void Start()
@@ -69,5 +69,7 @@ public class MeshGenerator : MonoBehaviour
     {
         myMesh.vertices = myVertices;
         myMesh.triangles = myTriangles;
+        myMesh.RecalculateBounds();
+        myMeshCollider.sharedMesh = myMesh;
     }
 }
